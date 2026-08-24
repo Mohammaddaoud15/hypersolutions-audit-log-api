@@ -1,0 +1,25 @@
+[project]
+name = "hypersolutions-audit-log-api"
+version = "0.1.0"
+description = "Compliance Audit Log Management System for HyperSolutions"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy",
+    "psycopg[binary]",
+    "alembic",
+    "pydantic",
+    "pydantic-settings",
+    "python-jose[cryptography]",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "httpx",
+    "ruff",
+    "mypy",
+]
+
