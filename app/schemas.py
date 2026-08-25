@@ -19,7 +19,6 @@ class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-
 class AuditLogCreate(BaseModel):
     action: ActionType
     resource_type: str
@@ -38,3 +37,8 @@ class AuditLogResponse(BaseModel):
     resource_id: str
     status: StatusType
     details: dict[str, Any] | None = None
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

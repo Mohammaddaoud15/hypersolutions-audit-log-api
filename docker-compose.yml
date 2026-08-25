@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: audit_logs
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,9 +19,10 @@ services:
   web:
     build: .
     container_name: hypersolutions_api
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - .:/app
+      - /app/.venv
     ports:
       - "8000:8000"
     environment:
