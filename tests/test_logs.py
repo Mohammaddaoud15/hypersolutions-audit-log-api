@@ -2,7 +2,6 @@ from uuid import uuid4
 
 from app.core.auth import hash_password
 from app.models import User, UserRole
-from tests.conftest import create_test_user
 
 
 def get_token(client, username):

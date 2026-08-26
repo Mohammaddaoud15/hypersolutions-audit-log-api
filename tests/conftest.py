@@ -6,11 +6,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.core.auth import hash_password
 from app.core.dependencies import get_db
 from app.database import Base
 from app.main import app
-from app.models import User, UserRole
 
 DATABASE_URL = "sqlite://"
 
@@ -51,18 +49,3 @@ def client(db: Session) -> Generator[TestClient]:
         yield client
 
     app.dependency_overrides.clear()
-def create_test_user(
-    db: Session,
-    username: str,
-    password: str = "password123",
-    role: str = "User",
-) -> User:
-    user = User(
-        username=username,
-        hashed_password=hash_password(password),
-        role=UserRole(role),
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
