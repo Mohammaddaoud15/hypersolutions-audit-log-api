@@ -14,3 +14,4 @@ app.include_router(logs.router)
 @app.get("/health", tags=["Health"])
 def health_check():
     return {"status": "healthy", "service": "Audit Log API"}
+

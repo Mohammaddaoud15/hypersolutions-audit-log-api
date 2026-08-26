@@ -4,9 +4,8 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
-from app.core.dependencies import get_current_user
+from app.core.dependencies import get_current_user, get_db
 from app.core.exceptions import PermissionDeniedException, ResourceNotFoundException
-from app.database import get_db
 from app.models import AuditLog, User
 from app.schemas import AuditLogCreate, AuditLogResponse
 

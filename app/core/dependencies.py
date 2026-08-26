@@ -1,3 +1,5 @@
+from collections.abc import Generator
+
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -5,10 +7,18 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.exceptions import CredentialsException
-from app.database import get_db
+from app.database import SessionLocal
 from app.models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+
+
+def get_db() -> Generator:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 def get_current_user(
@@ -19,15 +29,18 @@ def get_current_user(
             token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
         )
 
-        username: str = payload.get("sub")
-        if username is None:
+        username: str = payload.get("sub")          
+        if username is None:                         
             raise CredentialsException(detail="Token payload invalid")
 
     except JWTError:
         raise CredentialsException(detail="Could not validate credentials")
 
-    user = db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(User.username == username).first()   
     if user is None:
         raise CredentialsException(detail="User no longer exists")
 
     return user
+
+
+

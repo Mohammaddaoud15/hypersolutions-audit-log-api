@@ -14,6 +14,7 @@ dependencies = [
     "python-jose[cryptography]",
     "bcrypt>=5.0.0",
     "python-multipart>=0.0.32",
+    "pytest>=9.1.1",
 ]
 
 [project.optional-dependencies]
@@ -28,4 +29,10 @@ dev = [
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.params.Depends", "Depends"]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.12.0",
+    "pytest-cov>=7.1.0",
+]
 

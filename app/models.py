@@ -13,6 +13,7 @@ class UserRole(str, enum.Enum):
     ADMIN = "Admin"
     AUDITOR = "Auditor"
     SYSTEM = "System"
+    USER = "User"
 
 
 class ActionType(str, enum.Enum):
@@ -33,7 +34,7 @@ class User(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    role = Column(Enum(UserRole), nullable=False, default=UserRole.SYSTEM)
+    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER)
 
     logs = relationship("AuditLog", back_populates="user")
 

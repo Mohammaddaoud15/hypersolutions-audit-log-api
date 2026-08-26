@@ -6,8 +6,6 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
-from app.models import User, AuditLog
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.core.config import settings
