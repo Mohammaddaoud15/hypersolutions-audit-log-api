@@ -29,9 +29,10 @@ def get_current_user(
             token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
         )
 
-        username: str = payload.get("sub")          
-        if username is None:                         
+        sub = payload.get("sub")         
+        if sub is None:                         
             raise CredentialsException(detail="Token payload invalid")
+        username: str = str(sub)
 
     except JWTError:
         raise CredentialsException(detail="Could not validate credentials")

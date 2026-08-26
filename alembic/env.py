@@ -10,7 +10,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.core.config import settings
 from app.database import Base
-from app.models import AuditLog, User
 
 config = context.config
 
