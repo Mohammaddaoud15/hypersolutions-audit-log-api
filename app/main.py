@@ -2,8 +2,10 @@ import time
 
 from fastapi import FastAPI, Request
 
-from app.core.logger import logger
+from app.core.logger import logger, setup_logging
 from app.routes import auth, logs
+
+setup_logging()
 
 app = FastAPI(
     title="HyperSolutions Audit Log API",
