@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core.dependencies import get_current_user, get_db
 from app.core.exceptions import PermissionDeniedException, ResourceNotFoundException
-from app.models import ActionType, AuditLog, User
+from app.models import ActionType, AuditLog, User, UserRole
 from app.schemas import AuditLogCreate, AuditLogResponse
 
 router = APIRouter(prefix="/logs", tags=["Audit Logs"])
@@ -43,8 +43,14 @@ def get_audit_logs(
 ):
     query = db.query(AuditLog)
 
-    if current_user.role.value not in ["Admin", "Auditor", "System"]:
+    if current_user.role.value not in (
+        UserRole.ADMIN,
+        UserRole.AUDITOR,
+        UserRole.SYSTEM,
+    ):
         query = query.filter(AuditLog.user_id == current_user.id)
+    else:
+        query = query.order_by(AuditLog.timestamp.desc())
 
     return query.offset(skip).limit(limit).all()
 
@@ -62,7 +68,11 @@ def search_audit_logs(
 ):
     query = db.query(AuditLog)
 
-    if current_user.role.value not in ["Admin", "Auditor", "System"]:
+    if current_user.role.value not in (
+        UserRole.ADMIN,
+        UserRole.AUDITOR,
+        UserRole.SYSTEM,
+    ):
         query = query.filter(AuditLog.user_id == current_user.id)
     else:
         if target_user_id:

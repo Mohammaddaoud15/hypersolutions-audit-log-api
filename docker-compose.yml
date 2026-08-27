@@ -26,7 +26,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      # Overriding localhost with the 'db' service name for container networking
       DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/audit_logs
     depends_on:
       db:
