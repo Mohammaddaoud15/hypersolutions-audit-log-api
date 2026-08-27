@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core.dependencies import get_current_user, get_db
 from app.core.exceptions import PermissionDeniedException, ResourceNotFoundException
-from app.models import AuditLog, User
+from app.models import ActionType, AuditLog, User
 from app.schemas import AuditLogCreate, AuditLogResponse
 
 router = APIRouter(prefix="/logs", tags=["Audit Logs"])
@@ -51,7 +51,7 @@ def get_audit_logs(
 
 @router.get("/search", response_model=list[AuditLogResponse])
 def search_audit_logs(
-    action: str | None = None,
+    action: ActionType | None = None,
     target_user_id: UUID | None = None,
     start_date: datetime | None = None,
     end_date: datetime | None = None,
